@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vélocité - Du vélo en entreprise, de l'intention au déploiement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --primary: #1a1a1a;
+            --blue: #2454a5;
+            --blue-light: #3b7dd8;
+            --red: #c8102e;
+            --red-light: #e63950;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #888888;
+            --gray-dark: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--gray-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Custom Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--white);
+        }
+
+        .logo-text {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-wheel {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            position: relative;
+            margin: 0 2px;
+        }
+
+        .logo-wheel::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .logo-wheel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: 
+                linear-gradient(var(--white), var(--white)) center/1px 100%,
+                linear-gradient(var(--white), var(--white)) center/100% 1px,
+                linear-gradient(45deg, transparent 45%, var(--white) 45%, var(--white) 55%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, var(--white) 45%, var(--white) 55%, transparent 55%);
+            background-repeat: no-repeat;
+        }
+
+        .logo-waves {
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-dark);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .wave-line {
+            display: flex;
+            gap: 0;
+            margin-top: 8px;
+        }
+
+        .wave-blue, .wave-red {
+            height: 3px;
+            width: 60px;
+        }
+
+        .wave-blue {
+            background: linear-gradient(90deg, transparent, var(--blue), var(--blue-light));
+            border-radius: 3px 0 0 3px;
+        }
+
+        .wave-red {
+            background: linear-gradient(90deg, var(--red-light), var(--red), transparent);
+            border-radius: 0 3px 3px 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+            padding: 12px 28px;
+            border-radius: 30px;
+            opacity: 1 !important;
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(196, 16, 46, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(36, 84, 165, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(200, 16, 46, 0.15) 0%, transparent 50%);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--gray-light), transparent);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 .highlight-blue {
+            background: linear-gradient(90deg, var(--blue-light), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content h1 .highlight-red {
+            background: linear-gradient(90deg, var(--red), var(--red-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(36, 84, 165, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(36, 84, 165, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-bike-icon {
+            width: 350px;
+            height: 350px;
+            position: relative;
+        }
+
+        .bike-circle {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            position: relative;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .bike-icon-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            opacity: 0.9;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .badge-blue {
+            background: rgba(36, 84, 165, 0.1);
+            color: var(--blue);
+        }
+
+        .badge-red {
+            background: rgba(200, 16, 46, 0.1);
+            color: var(--red);
+        }
+
+        .badge-dark {
+            background: rgba(0,0,0,0.05);
+            color: var(--gray-dark);
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--gray-light);
+            padding: 100px 20px;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blue), var(--red));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .stat-text {
+            color: var(--gray-dark);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .stat-highlight {
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .problem-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .problem-text {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .solution-box {
+            background: var(--primary-dark);
+            padding: 50px;
+            border-radius: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blue), var(--red));
+        }
+
+        .solution-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .solution-box p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        /* Method Section - 4 Steps */
+        .method-section {
+            padding: 100px 20px;
+            background: var(--gray-light);
+        }
+
+        .method-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 70px;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--red));
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        .step-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .step-card:nth-child(1) .step-number { background: var(--blue); }
+        .step-card:nth-child(2) .step-number { background: linear-gradient(135deg, var(--blue) 0%, #6b4fa0 100%); }
+        .step-card:nth-child(3) .step-number { background: linear-gradient(135deg, #6b4fa0 0%, var(--red) 100%); }
+        .step-card:nth-child(4) .step-number { background: var(--red); }
+
+        .step-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+            min-height: 50px;
+        }
+
+        .step-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .step-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .step-card:nth-child(1) .step-tag { background: rgba(36, 84, 165, 0.1); color: var(--blue); }
+        .step-card:nth-child(2) .step-tag { background: rgba(107, 79, 160, 0.1); color: #6b4fa0; }
+        .step-card:nth-child(3) .step-tag { background: rgba(200, 16, 46, 0.1); color: var(--red); }
+        .step-card:nth-child(4) .step-tag { background: var(--primary-dark); color: white; }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 100px 20px;
+            background: var(--primary-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 0% 0%, rgba(36, 84, 165, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, rgba(200, 16, 46, 0.2) 0%, transparent 50%);
+        }
+
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefits-header h2 {
+            color: var(--white);
+        }
+
+        .benefits-header p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 45px 35px;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+
+        .benefit-card:nth-child(1) .benefit-icon { background: linear-gradient(135deg, var(--blue), var(--blue-light)); }
+        .benefit-card:nth-child(2) .benefit-icon { background: linear-gradient(135deg, #6b4fa0, #9b7ed8); }
+        .benefit-card:nth-child(3) .benefit-icon { background: linear-gradient(135deg, var(--red), var(--red-light)); }
+
+        .benefit-card h3 {
+            color: var(--white);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .benefit-card > p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .benefit-list {
+            list-style: none;
+        }
+
+        .benefit-list li {
+            color: rgba(255,255,255,0.85);
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .benefit-list li:last-child {
+            border-bottom: none;
+        }
+
+        .benefit-list li::before {
+            content: '✓';
+            color: var(--blue-light);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .benefit-card:nth-child(2) .benefit-list li::before { color: #9b7ed8; }
+        .benefit-card:nth-child(3) .benefit-list li::before { color: var(--red-light); }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 20px;
+            background: var(--white);
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            font-size: 1.25rem;
+            margin-bottom: 45px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary {
+            background: var(--primary-dark);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-cta-primary:hover {
+            background: var(--blue);
+            transform: translateY(-3px);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .btn-cta-secondary:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 80px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            margin: 25px 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 14px;
+        }
+
+        .footer-column a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-bottom p,
+        .footer-bottom a {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-bike-icon {
+                width: 250px;
+                height: 250px;
+            }
+
+            .stats-grid,
+            .steps-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2,
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="#" class="logo">
+                    <span class="logo-text">
+                        VÉL<span class="logo-wheel"></span>CITÉ
+                    </span>
+                </a>
+                <div class="wave-line">
+                    <div class="wave-blue"></div>
+                    <div class="wave-red"></div>
+                </div>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="navMenu">
+                <li><a href="#constat">Le Constat</a></li>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#methode">Méthode</a></li>
+                <li><a href="#avantages">Avantages</a></li>
+                <li><a href="#contact" class="nav-cta">Nous Contacter</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <p class="hero-tagline">De l'intention au déploiement réussi</p>
+                <h1>Le <span class="highlight-blue">vélo en entreprise</span>, de l'ambition à <span class="highlight-red">la réalité</span></h1>
+                <p>Vélocité accompagne les entreprises de la réflexion amont à la mise en place de solutions concrètes pour un déploiement réussi et maîtrisé de la mobilité vélo.</p>
+                <div class="hero-buttons">
+                    <a href="#methode" class="btn btn-primary">
+                        Découvrir notre méthode →
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        Prendre rendez-vous
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-bike-icon">
+                    <div class="bike-circle"></div>
+                    <div class="bike-icon-center">🚴</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section" id="constat">
+        <div class="stats-container">
+            <div class="section-header">
+                <span class="section-badge badge-dark">📊 Le Constat</span>
+                <h2>Les chiffres parlent d'eux-mêmes</h2>
+                <p>Le potentiel est immense, mais le passage à l'action reste bloqué</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🚗</div>
+                    <div class="stat-number">70%</div>
+                    <p class="stat-text">des trajets domicile-travail sont réalisés <span class="stat-highlight">en voiture pour moins de 5 km</span></p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💼</div>
+                    <div class="stat-number">3/5</div>
+                    <p class="stat-text">salariés se déplaceraient à vélo <span class="stat-highlight">si leur entreprise le finançait</span></p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-number">?</div>
+                    <p class="stat-text">Pourtant, <span class="stat-highlight">le vélo en entreprise ne décolle pas</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section" id="mission">
+        <div class="problem-container">
+            <span class="section-badge badge-red">⚠️ Le Défi</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 30px;">Passer de la <span style="color: var(--blue);">tendance</span> à la <span style="color: var(--red);">mise en œuvre</span></h2>
+            <p class="problem-text">
+                Les entreprises ont la volonté, les salariés sont demandeurs, les incitations existent... 
+                Mais entre l'intention et la réalité, il y a un fossé que peu arrivent à franchir seuls.
+            </p>
+            <div class="solution-box">
+                <h3>💡 VÉLOCITÉ : La Solution</h3>
+                <p><strong>Transformer une bonne intention RSE en réalité concrète</strong><br>
+                Accompagner les entreprises à chaque étape de leur politique de mobilité vélo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method Section -->
+    <section class="method-section" id="methode">
+        <div class="method-container">
+            <div class="section-header">
+                <span class="section-badge badge-blue">📋 Notre Méthode</span>
+                <h2>4 étapes vers le succès</h2>
+                <p>Une approche structurée et progressive pour garantir la réussite de votre projet</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Évaluer & Comprendre</h3>
+                    <p>Analyse des besoins et des freins spécifiques à votre organisation</p>
+                    <span class="step-tag">AUDIT</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Informer & Animer</h3>
+                    <p>Sensibilisation de vos collaborateurs pour accompagner le changement</p>
+                    <span class="step-tag">ENGAGEMENT</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Tester & Recommander</h3>
+                    <p>Phase pilote débouchant sur une recommandation claire</p>
+                    <span class="step-tag">GO / AJUSTER / NO GO</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Orchestrer & Déployer</h3>
+                    <p>Déploiement à l'échelle avec suivi des indicateurs de succès</p>
+                    <span class="step-tag">DÉPLOIEMENT</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section" id="avantages">
+        <div class="benefits-container">
+            <div class="section-header benefits-header">
+                <span class="section-badge badge-blue">✨ Pourquoi agir ?</span>
+                <h2>Les avantages pour votre entreprise</h2>
+                <p>Anticipez les changements sociétaux déjà à l'œuvre</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌍</div>
+                    <h3>Image Externe</h3>
+                    <p>Renforcez votre positionnement et attractivité</p>
+                    <ul class="benefit-list">
+                        <li>Modernité & Innovation</li>
+                        <li>Impact RSE concret et mesurable</li>
+                        <li>Anticipation des contraintes réglementaires</li>
+                        <li>Communication positive</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">👥</div>
+                    <h3>Image Interne</h3>
+                    <p>Fidélisez et engagez vos collaborateurs</p>
+                    <ul class="benefit-list">
+                        <li>Marque employeur renforcée</li>
+                        <li>Engagement des équipes</li>
+                        <li>Bien-être au travail</li>
+                        <li>Attractivité pour les talents</li>
+                    </ul>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Économies</h3>
+                    <p>Optimisez vos coûts structurels</p>
+                    <ul class="benefit-list">
+                        <li>Avantages fiscaux (FMD)</li>
+                        <li>Réduction des besoins parking</li>
+                        <li>Optimisation gestion de flotte</li>
+                        <li>Baisse de l'absentéisme</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-container">
+            <h2>Prêts à passer à l'action ?</h2>
+            <p>Discutons de votre projet. Premier échange sans engagement.</p>
+            <div class="cta-buttons">
+                <a href="mailto:contact@velocite-conseil.fr" class="btn btn-cta-primary">
+                    📧 Nous contacter
+                </a>
+                <a href="tel:+33123456789" class="btn btn-cta-secondary">
+                    📞 01 23 45 67 89
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <a href="#" class="logo">
+                            <span class="logo-text">VÉL<span class="logo-wheel"></span>CITÉ</span>
+                        </a>
+                        <div class="wave-line">
+                            <div class="wave-blue"></div>
+                            <div class="wave-red"></div>
+                        </div>
+                    </div>
+                    <p>De l'intention au déploiement réussi du vélo en entreprise. Transformons vos ambitions RSE en réalités concrètes.</p>
+                    <div class="social-links">
+                        <a href="#" title="LinkedIn">in</a>
+                        <a href="#" title="Twitter">𝕏</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>NAVIGATION</h4>
+                    <ul>
+                        <li><a href="#constat">Le Constat</a></li>
+                        <li><a href="#mission">Notre Mission</a></li>
+                        <li><a href="#methode">Notre Méthode</a></li>
+                        <li><a href="#avantages">Avantages</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>SERVICES</h4>
+                    <ul>
+                        <li><a href="#">Audit Mobilité</a></li>
+                        <li><a href="#">Accompagnement</a></li>
+                        <li><a href="#">Animation</a></li>
+                        <li><a href="#">Déploiement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>CONTACT</h4>
+                    <ul>
+                        <li><a href="mailto:contact@velocite-conseil.fr">contact@velocite-conseil.fr</a></li>
+                        <li><a href="tel:+33123456789">01 23 45 67 89</a></li>
+                        <li><a href="#">France</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Vélocité - Tous droits réservés</p>
+                <p>
+                    <a href="#">Mentions légales</a> · 
+                    <a href="#">Confidentialité</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

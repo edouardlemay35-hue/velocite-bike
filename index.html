@@ -46,57 +46,6 @@
             color: var(--white);
         }
 
-        .logo-text {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-wheel {
-            width: 28px;
-            height: 28px;
-            border: 2px solid var(--white);
-            border-radius: 50%;
-            position: relative;
-            margin: 0 2px;
-        }
-
-        .logo-wheel::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 4px;
-            height: 4px;
-            background: var(--white);
-            border-radius: 50%;
-        }
-
-        .logo-wheel::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background:
-                linear-gradient(var(--white), var(--white)) center/1px 100%,
-                linear-gradient(var(--white), var(--white)) center/100% 1px,
-                linear-gradient(45deg, transparent 45%, var(--white) 45%, var(--white) 55%, transparent 55%),
-                linear-gradient(-45deg, transparent 45%, var(--white) 45%, var(--white) 55%, transparent 55%);
-            background-repeat: no-repeat;
-        }
-
-        .logo-waves {
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            right: 0;
-            height: 6px;
-            overflow: hidden;
-        }
-
         /* Navigation */
         header {
             position: fixed;
@@ -123,26 +72,12 @@
             position: relative;
         }
 
-        .wave-line {
-            display: flex;
-            gap: 0;
-            margin-top: 8px;
-        }
+        .bike {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
 
-        .wave-blue,
-        .wave-red {
-            height: 3px;
-            width: 60px;
-        }
-
-        .wave-blue {
-            background: linear-gradient(90deg, transparent, var(--blue), var(--blue-light));
-            border-radius: 3px 0 0 3px;
-        }
-
-        .wave-red {
-            background: linear-gradient(90deg, var(--red-light), var(--red), transparent);
-            border-radius: 0 3px 3px 0;
         }
 
         nav ul {
@@ -331,14 +266,7 @@
             }
         }
 
-        .bike-icon-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 120px;
-            opacity: 0.9;
-        }
+
 
         /* Section Styling */
         section {
@@ -1049,11 +977,13 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-bike-icon">
-                    <div class="bike-circle"></div>
-                    <div class="bike-icon-center">🚴</div>
+                    <div class="bike-icon-center">
+                        <a aria-label="Vélocité">
+                            <img  class="bike" src="/bike.jpg" alt="Vélocité" class="logo-img">
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- Stats Section -->
@@ -1073,9 +1003,9 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">💼</div>
-                    <div class="stat-number">3/5</div>
-                    <p class="stat-text">salariés se déplaceraient à vélo <span class="stat-highlight">si leur
-                            entreprise le finançait</span></p>
+                    <div class="stat-number">60%</div>
+                    <p class="stat-text">des salariés adopterait le vélo <span class="stat-highlight">si leur
+                            entreprise les accompagnait</span></p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">📉</div>
@@ -1198,9 +1128,6 @@
                 <a href="mailto:edouard.lemay@velocite.bike" class="btn btn-cta-primary">
                     📧 Nous contacter
                 </a>
-                <a href="/linkedin" class="btn btn-cta-secondary">
-                    Linkedin
-                </a>
             </div>
         </div>
     </section>
@@ -1219,7 +1146,6 @@
                         réalités concrètes.</p>
                     <div class="social-links">
                         <a href="#" title="LinkedIn">in</a>
-                        <a href="#" title="Twitter">𝕏</a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1244,17 +1170,11 @@
                     <h4>CONTACT</h4>
                     <ul>
                         <li><a href="mailto:contact@velocite-conseil.fr">contact@velocite-conseil.fr</a></li>
-                        <li><a href="tel:+33123456789">01 23 45 67 89</a></li>
-                        <li><a href="#">France</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 Vélocité - Tous droits réservés</p>
-                <p>
-                    <a href="#">Mentions légales</a> ·
-                    <a href="#">Confidentialité</a>
-                </p>
             </div>
         </div>
     </footer>
